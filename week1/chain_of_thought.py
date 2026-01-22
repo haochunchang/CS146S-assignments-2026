@@ -7,7 +7,7 @@ load_dotenv()
 
 NUM_RUNS_TIMES = 5
 
-YOUR_SYSTEM_PROMPT = """You are a math expert that can calculate math questions easily.
+YOUR_SYSTEM_PROMPT = """You are a math expert that can solve any math problems.
 Think by step-by-step when you are deriving your answers.
 """
 

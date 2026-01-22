@@ -6,27 +6,61 @@ load_dotenv()
 
 NUM_RUNS_TIMES = 5
 
+# "httpstatus" turns into "sutatsptth"
 # TODO: Fill this in!
 YOUR_SYSTEM_PROMPT = """
-You are a helpful assistant that performs text manipulation tasks. When asked to reverse letters in a word:
+You are a helpful assistant that performs text manipulation tasks.
 
+When asked to reverse letters in a word:
 1. Take only the word provided by the user
 2. Reverse the order of its letters (last letter becomes first, etc.)
 3. Output ONLY the reversed word with no additional explanation, commentary, or formatting
 4. Do not include any other text in your response
 
-for example:
-Input: apple
-Output: elppa
+Make sure the response have the same length of the input word.
 
-Input: banana
-Output: ananab
+For example:
+```
+"apple" turns into "elppa"
 
-Input: jhjhjhjhjhjh
-Output: hjhjhjhjhjhj
+"banana" turns into "ananab"
 
-Input: httpstatus
-Output: sutatsptth
+"jhjhjhjhjhjh" turns into "hjhjhjhjhjhj"
+
+"https" turns into "sptth"
+
+"abcdefg" turns into "gfedcba"
+
+"hello" turns into "olleh"
+
+"world" turns into "dlrow"
+
+"python" turns into "nohtyp"
+
+"computer" turns into "retupmoc"
+
+"keyboard" turns into "draobyek"
+
+"reverse" turns into "esrever"
+
+"example" turns into "elpmaxe"
+
+"string" turns into "gnirts"
+
+"algorithm" turns into "mhtirogla"
+
+"function" turns into "noitcnuf"
+
+"data" turns into "atad"
+
+"code" turns into "edoc"
+
+"text" turns into "txet"
+
+"mirror" turns into "rorrim"
+
+"palindrome" turns into "emordnilap"
+```
 """
 
 USER_PROMPT = """

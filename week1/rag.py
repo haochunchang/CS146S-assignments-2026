@@ -32,13 +32,13 @@ CORPUS: List[str] = load_corpus_from_files(DATA_FILES)
 
 QUESTION = (
     "Write a Python function `fetch_user_name(user_id: str, api_key: str) -> str` that calls the documented API "
-    "to fetch a user by id and returns only the user's name as a string."
-)
-
+    "to fetch a user by id and returns only the user's name as a string.")
 
 # TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
-
+YOUR_SYSTEM_PROMPT = """
+Adhere strictly to the information that you have.
+Do not make things up or hallucinating.
+"""
 
 # For this simple example
 # For this coding task, validate by required snippets rather than exact string
@@ -56,7 +56,7 @@ def YOUR_CONTEXT_PROVIDER(corpus: List[str]) -> List[str]:
 
     For example, return [] to simulate missing context, or [corpus[0]] to include the API docs.
     """
-    return []
+    return corpus
 
 
 def make_user_prompt(question: str, context_docs: List[str]) -> str:
@@ -89,7 +89,9 @@ def extract_code_block(text: str) -> str:
     return text.strip()
 
 
-def test_your_prompt(system_prompt: str, context_provider: Callable[[List[str]], List[str]]) -> bool:
+def test_your_prompt(
+        system_prompt: str, context_provider: Callable[[List[str]],
+                                                       List[str]]) -> bool:
     """Run up to NUM_RUNS_TIMES and return True if any output matches EXPECTED_OUTPUT."""
     context_docs = context_provider(CORPUS)
     user_prompt = make_user_prompt(QUESTION, context_docs)
@@ -99,8 +101,14 @@ def test_your_prompt(system_prompt: str, context_provider: Callable[[List[str]],
         response = chat(
             model="llama3.1:8b",
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": user_prompt},
+                {
+                    "role": "system",
+                    "content": system_prompt
+                },
+                {
+                    "role": "user",
+                    "content": user_prompt
+                },
             ],
             options={"temperature": 0.0},
         )

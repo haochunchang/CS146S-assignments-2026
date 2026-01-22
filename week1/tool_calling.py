@@ -60,6 +60,7 @@ def add(a: int, b: int) -> int:
 def greet(name: str) -> str:
     return f"Hello, {name}!"
 
+
 # Tool registry for dynamic execution by name
 TOOL_REGISTRY: Dict[str, Callable[..., str]] = {
     "output_every_func_return_type": output_every_func_return_type,
@@ -70,7 +71,13 @@ TOOL_REGISTRY: Dict[str, Callable[..., str]] = {
 # ==========================
 
 # TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """
+You have a tool called 'output_every_func_return_type'.
+When you are prompted to call the tool, output the tool's information in this JSON format:
+```
+{"tool": "output_every_func_return_type", "args": {<The tool's arguments if provided in the prompt>}}
+```
+"""
 
 
 def resolve_path(p: str) -> str:
@@ -103,8 +110,14 @@ def run_model_for_tool_call(system_prompt: str) -> Dict[str, Any]:
     response = chat(
         model="llama3.1:8b",
         messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": "Call the tool now."},
+            {
+                "role": "system",
+                "content": system_prompt
+            },
+            {
+                "role": "user",
+                "content": "Call the tool now."
+            },
         ],
         options={"temperature": 0.3},
     )
@@ -125,7 +138,8 @@ def execute_tool_call(call: Dict[str, Any]) -> str:
 
     # Best-effort path resolution if a file_path arg is present
     if "file_path" in args and isinstance(args["file_path"], str):
-        args["file_path"] = resolve_path(args["file_path"]) if str(args["file_path"]) != "" else __file__
+        args["file_path"] = resolve_path(args["file_path"]) if str(
+            args["file_path"]) != "" else __file__
     elif "file_path" not in args:
         # Provide default for tools expecting file_path
         args["file_path"] = __file__

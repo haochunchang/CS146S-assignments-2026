@@ -9,7 +9,20 @@ load_dotenv()
 NUM_RUNS_TIMES = 5
 
 # TODO: Fill this in! Try to get as close to 100% correctness across all runs as possible.
-YOUR_SYSTEM_PROMPT = ""
+YOUR_SYSTEM_PROMPT = """
+You are a helping assistant. You will be present by problems similar to the following:
+Think through your problem step-by-step.
+
+Q: There are 15 trees in the grove. Grove workers will plant trees in the grove today. After they are done,
+there will be 21 trees. How many trees did the grove workers plant today?
+Steps: We start with 15 trees. Later we have 21 trees. The difference must be the number of trees they planted.
+So, they must have planted 21 - 15 = 6 trees. The answer is 6.
+A: 6
+
+Q: If there are 3 cars in the parking lot and 2 more cars arrive, how many cars are in the parking lot?
+Steps: There are 3 cars in the parking lot already. 2 more arrive. Now there are 3 + 2 = 5 cars. The answer is 5.
+A: 5
+"""
 
 USER_PROMPT = """
 Solve this problem, then give the final answer on the last line as "Answer: <number>".
@@ -50,8 +63,14 @@ def test_your_prompt(system_prompt: str) -> bool:
         response = chat(
             model="llama3.1:8b",
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": USER_PROMPT},
+                {
+                    "role": "system",
+                    "content": system_prompt
+                },
+                {
+                    "role": "user",
+                    "content": USER_PROMPT
+                },
             ],
             options={"temperature": 1},
         )
@@ -66,7 +85,9 @@ def test_your_prompt(system_prompt: str) -> bool:
 
     counts = Counter(answers)
     majority_answer, majority_count = counts.most_common(1)[0]
-    print(f"Majority answer: {majority_answer} ({majority_count}/{len(answers)})")
+    print(
+        f"Majority answer: {majority_answer} ({majority_count}/{len(answers)})"
+    )
 
     if majority_answer.strip() == EXPECTED_OUTPUT.strip():
         print("SUCCESS")
@@ -82,5 +103,3 @@ def test_your_prompt(system_prompt: str) -> bool:
 
 if __name__ == "__main__":
     test_your_prompt(YOUR_SYSTEM_PROMPT)
-
-
