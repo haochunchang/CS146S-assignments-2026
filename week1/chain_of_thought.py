@@ -7,16 +7,15 @@ load_dotenv()
 
 NUM_RUNS_TIMES = 5
 
-# TODO: Fill this in!
-YOUR_SYSTEM_PROMPT = ""
-
+YOUR_SYSTEM_PROMPT = """You are a math expert that can calculate math questions easily.
+Think by step-by-step when you are deriving your answers.
+"""
 
 USER_PROMPT = """
 Solve this problem, then give the final answer on the last line as "Answer: <number>".
 
 what is 3^{12345} (mod 100)?
 """
-
 
 # For this simple example, we expect the final numeric answer only
 EXPECTED_OUTPUT = "Answer: 43"
@@ -50,12 +49,19 @@ def test_your_prompt(system_prompt: str) -> bool:
         response = chat(
             model="llama3.1:8b",
             messages=[
-                {"role": "system", "content": system_prompt},
-                {"role": "user", "content": USER_PROMPT},
+                {
+                    "role": "system",
+                    "content": system_prompt
+                },
+                {
+                    "role": "user",
+                    "content": USER_PROMPT
+                },
             ],
             options={"temperature": 0.3},
         )
         output_text = response.message.content
+        print(output_text)
         final_answer = extract_final_answer(output_text)
         if final_answer.strip() == EXPECTED_OUTPUT.strip():
             print("SUCCESS")
@@ -68,5 +74,3 @@ def test_your_prompt(system_prompt: str) -> bool:
 
 if __name__ == "__main__":
     test_your_prompt(YOUR_SYSTEM_PROMPT)
-
-

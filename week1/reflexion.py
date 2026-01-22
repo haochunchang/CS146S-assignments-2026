@@ -15,16 +15,19 @@ Keep the implementation minimal.
 """
 
 # TODO: Fill this in!
-YOUR_REFLEXION_PROMPT = ""
-
+YOUR_REFLEXION_PROMPT = """After generating your answers, 
+review them by checking if it is correct or not.
+If you feel confident that it is correct, then follow the system prompt to output your answer.
+If you are not confident, then iterate and improve your answers for a few times.
+"""
 
 # Ground-truth test suite used to evaluate generated code
 SPECIALS = set("!@#$%^&*()-_")
 TEST_CASES: List[Tuple[str, bool]] = [
-    ("Password1!", True),       # valid
-    ("password1!", False),      # missing uppercase
-    ("Password!", False),       # missing digit
-    ("Password1", False),       # missing special
+    ("Password1!", True),  # valid
+    ("password1!", False),  # missing uppercase
+    ("Password!", False),  # missing digit
+    ("Password1", False),  # missing special
 ]
 
 
@@ -40,10 +43,12 @@ def extract_code_block(text: str) -> str:
 
 def load_function_from_code(code_str: str) -> Callable[[str], bool]:
     namespace: dict = {}
-    exec(code_str, namespace)  # noqa: S102 (executing controlled code from model for exercise)
+    exec(code_str, namespace
+         )  # noqa: S102 (executing controlled code from model for exercise)
     func = namespace.get("is_valid_password")
     if not callable(func):
-        raise ValueError("No callable is_valid_password found in generated code")
+        raise ValueError(
+            "No callable is_valid_password found in generated code")
     return func
 
 
@@ -83,8 +88,14 @@ def generate_initial_function(system_prompt: str) -> str:
     response = chat(
         model="llama3.1:8b",
         messages=[
-            {"role": "system", "content": system_prompt},
-            {"role": "user", "content": "Provide the implementation now."},
+            {
+                "role": "system",
+                "content": system_prompt
+            },
+            {
+                "role": "user",
+                "content": "Provide the implementation now."
+            },
         ],
         options={"temperature": 0.2},
     )
@@ -96,7 +107,7 @@ def your_build_reflexion_context(prev_code: str, failures: List[str]) -> str:
 
     Return a string that will be sent as the user content alongside the reflexion system prompt.
     """
-    return ""
+    return f"Here is your current answer: {prev_code}, and these are the failures: {failures}"
 
 
 def apply_reflexion(
@@ -110,8 +121,14 @@ def apply_reflexion(
     response = chat(
         model="llama3.1:8b",
         messages=[
-            {"role": "system", "content": reflexion_prompt},
-            {"role": "user", "content": reflection_context},
+            {
+                "role": "system",
+                "content": reflexion_prompt
+            },
+            {
+                "role": "user",
+                "content": reflection_context
+            },
         ],
         options={"temperature": 0.2},
     )
@@ -132,10 +149,12 @@ def run_reflexion_flow(
         print("SUCCESS (initial implementation passed all tests)")
         return True
     else:
-        print(f"FAILURE (initial implementation failed some tests): {failures}")
+        print(
+            f"FAILURE (initial implementation failed some tests): {failures}")
 
     # 2) Single reflexion iteration
-    improved_code = apply_reflexion(reflexion_prompt, build_context, initial_code, failures)
+    improved_code = apply_reflexion(reflexion_prompt, build_context,
+                                    initial_code, failures)
     print("\nImproved code:\n" + improved_code)
     improved_func = load_function_from_code(improved_code)
     passed2, failures2 = evaluate_function(improved_func)
@@ -150,4 +169,5 @@ def run_reflexion_flow(
 
 
 if __name__ == "__main__":
-    run_reflexion_flow(SYSTEM_PROMPT, YOUR_REFLEXION_PROMPT, your_build_reflexion_context)
+    run_reflexion_flow(SYSTEM_PROMPT, YOUR_REFLEXION_PROMPT,
+                       your_build_reflexion_context)
