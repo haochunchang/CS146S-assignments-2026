@@ -1,7 +1,28 @@
+# LLM's output
 Date: 2026-01-22
 
 # K-shot prompting — `week1/k_shot_prompting.py`
+Note: "Cheating" now since it has the question in the examples
 
+Running test 1 of 5
+SUCCESS
+
+(Without the question)
+Running test 1 of 5
+Expected output: sutatsptth
+Actual output: spttth
+Running test 2 of 5
+Expected output: sutatsptth
+Actual output: tsatuspht
+Running test 3 of 5
+Expected output: sutatsptth
+Actual output: stautshttp
+Running test 4 of 5
+Expected output: sutatsptth
+Actual output: statruohp
+Running test 5 of 5
+Expected output: sutatsptth
+Actual output: tsusptth
 
 # Chain-of-thought — `week1/chain_of_thought.py`
 

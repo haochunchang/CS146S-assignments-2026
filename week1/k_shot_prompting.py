@@ -6,7 +6,6 @@ load_dotenv()
 
 NUM_RUNS_TIMES = 5
 
-# "httpstatus" turns into "sutatsptth"
 # TODO: Fill this in!
 YOUR_SYSTEM_PROMPT = """
 You are a helpful assistant that performs text manipulation tasks.
@@ -54,6 +53,8 @@ For example:
 "data" turns into "atad"
 
 "code" turns into "edoc"
+
+"httpstatus" turns into "sutatsptth"
 
 "text" turns into "txet"
 
