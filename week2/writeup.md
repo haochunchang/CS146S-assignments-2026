@@ -19,37 +19,53 @@ This assignment took me about **TODO** hours to do.
 ## YOUR RESPONSES
 For each exercise, please include what prompts you used to generate the answer, in addition to the location of the generated response. Make sure to clearly add comments in your code documenting which parts are generated.
 
+
 ### Exercise 1: Scaffold a New Feature
+Using Copilot "Auto"
+
 Prompt: 
 ```
-TODO
+Analyze the existing extract_action_items() function in week2/app/services/extract.py, which currently extracts action items using predefined heuristics.
+
+Your task is to implement an LLM-powered alternative, extract_action_items_llm(), that utilizes Ollama to perform action item extraction via a large language model.
 ``` 
 
 Generated Code Snippets:
 ```
-TODO: List all modified code files with the relevant line numbers.
+app/services/extract.py#L90-179
 ```
 
 ### Exercise 2: Add Unit Tests
+
+Using Copilot "GPT-5 mini"
 Prompt: 
 ```
-TODO
+Write unit tests for extract_action_items_llm() covering multiple inputs (e.g., bullet lists, keyword-prefixed lines, empty input) in #file:test_extract.py .
 ``` 
 
 Generated Code Snippets:
 ```
-TODO: List all modified code files with the relevant line numbers.
+tests/test_extract.py#L4
+tests/test_extract.py#L21-62
 ```
 
 ### Exercise 3: Refactor Existing Code for Clarity
+Using Copilot "GPT-5 mini"
 Prompt: 
 ```
-TODO
+Perform a refactor of the code in the backend, focusing in particular on well-defined API contracts/schemas, database layer cleanup, app lifecycle/configuration, error handling. 
 ``` 
 
 Generated/Modified Code Snippets:
 ```
-TODO: List all modified code files with the relevant line numbers. (We anticipate there may be multiple scattered changes here – just produce as comprehensive of a list as you can.)
+
+app/services/extract.py#L90-L179
+app/db.py#L24-L26, L52-L61, L64-L72, L75-L86, L89-L104, L107-L122, L125-L135
+app/main.py#L11, L18-L24
+app/routers/action_items.py#L10, L15-L37, L40-L53, L56-L92
+app/routers/notes.py#L9, L14-L32, L35-L48
+app/schemas.py#L1-L43
+
 ```
 
 
