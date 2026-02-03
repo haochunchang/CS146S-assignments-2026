@@ -36,6 +36,40 @@ def extract(req: schemas.ExtractRequest):
     }
 
 
+@router.post("/extract-llm", response_model=schemas.ExtractResponse)
+def extract_llm(req: schemas.ExtractRequest):
+    """Use the LLM-powered extractor; fall back to heuristics on error."""
+    text = req.text.strip()
+    if not text:
+        raise HTTPException(status_code=400, detail="text is required")
+
+    note_id: Optional[int] = None
+    try:
+        if req.save_note:
+            note_id = db.insert_note(text)
+
+        items = extract_action_items_llm = None
+        # Prefer the LLM-backed extractor which itself falls back on errors
+        try:
+            from ..services.extract import extract_action_items_llm
+            items = extract_action_items_llm(text)
+        except Exception:
+            # final fallback to heuristic extractor
+            items = extract_action_items(text)
+
+        ids = db.insert_action_items(items, note_id=note_id)
+    except db.DBError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    return {
+        "note_id": note_id,
+        "items": [{
+            "id": i,
+            "text": t
+        } for i, t in zip(ids, items)],
+    }
+
+
 @router.get("", response_model=List[schemas.ActionItem])
 def list_all(note_id: Optional[int] = None):
     try:

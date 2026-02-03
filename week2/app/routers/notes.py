@@ -1,6 +1,6 @@
 from __future__ import annotations
 
-from typing import Dict
+from typing import Dict, List
 
 from fastapi import APIRouter, HTTPException
 
@@ -45,3 +45,17 @@ def get_single_note(note_id: int) -> Dict:
         "content": row["content"],
         "created_at": row["created_at"]
     }
+
+
+@router.get("", response_model=List[schemas.Note])
+def list_all_notes() -> List[Dict]:
+    try:
+        rows = db.list_notes()
+    except db.DBError as e:
+        raise HTTPException(status_code=500, detail=str(e))
+
+    return [{
+        "id": r["id"],
+        "content": r["content"],
+        "created_at": r["created_at"]
+    } for r in rows]
