@@ -13,67 +13,101 @@ Name: **TODO** \
 SUNet ID: **TODO** \
 Citations: **TODO**
 
-This assignment took me about **TODO** hours to do. 
+This assignment took me about 3 hours to do. 
 
 
 ## YOUR RESPONSES
 For each exercise, please include what prompts you used to generate the answer, in addition to the location of the generated response. Make sure to clearly add comments in your code documenting which parts are generated.
 
+
 ### Exercise 1: Scaffold a New Feature
+Using Copilot "Auto" from VSCode
+
 Prompt: 
 ```
-TODO
+Analyze the existing extract_action_items() function in week2/app/services/extract.py, which currently extracts action items using predefined heuristics.
+
+Your task is to implement an LLM-powered alternative, extract_action_items_llm(), that utilizes Ollama to perform action item extraction via a large language model.
 ``` 
 
 Generated Code Snippets:
 ```
-TODO: List all modified code files with the relevant line numbers.
+app/services/extract.py#L90-179
 ```
 
 ### Exercise 2: Add Unit Tests
+
+Using Copilot "GPT-5 mini" from VSCode
 Prompt: 
 ```
-TODO
+Write unit tests for extract_action_items_llm() covering multiple inputs (e.g., bullet lists, keyword-prefixed lines, empty input) in #file:test_extract.py .
 ``` 
 
 Generated Code Snippets:
 ```
-TODO: List all modified code files with the relevant line numbers.
+tests/test_extract.py#L4
+tests/test_extract.py#L21-62
 ```
 
 ### Exercise 3: Refactor Existing Code for Clarity
+Using Copilot "GPT-5 mini" from VSCode
 Prompt: 
 ```
-TODO
+Perform a refactor of the code in the backend, focusing in particular on well-defined API contracts/schemas, database layer cleanup, app lifecycle/configuration, error handling. 
 ``` 
 
 Generated/Modified Code Snippets:
 ```
-TODO: List all modified code files with the relevant line numbers. (We anticipate there may be multiple scattered changes here – just produce as comprehensive of a list as you can.)
+
+app/services/extract.py#L90-L179
+app/db.py#L24-L26, L52-L61, L64-L72, L75-L86, L89-L104, L107-L122, L125-L135
+app/main.py#L11, L18-L24
+app/routers/action_items.py#L10, L15-L37, L40-L53, L56-L92
+app/routers/notes.py#L9, L14-L32, L35-L48
+app/schemas.py#L1-L43
+
 ```
 
 
 ### Exercise 4: Use Agentic Mode to Automate a Small Task
 Prompt: 
 ```
-TODO
+Integrate the LLM-powered extraction as a new endpoint. Update the frontend to include an "Extract LLM" button that, when clicked, triggers the extraction process via the new endpoint.
+
+Run the test suite and if it passed, write down the changed code line number in #file:writeup.md
+
+/clear
+
+Expose one final endpoint to retrieve all notes. Update the frontend to include a "List Notes" button that, when clicked, fetches and displays them.
+
+Run the test suite and if it passed, write down the changed code line number in #file:writeup.md
 ``` 
 
 Generated Code Snippets:
 ```
-TODO: List all modified code files with the relevant line numbers.
+app/routers/action_items.py#L10, L15-L37, L40-L53, L56-L92
+app/routers/notes.py#L51-L62
+frontend/index.html#L26-L28, L66, L71-L95, L136-L154
 ```
 
 
 ### Exercise 5: Generate a README from the Codebase
-Prompt: 
+
+Using Copilot "GPT-5 mini" from VSCode
+Prompt:
 ```
-TODO
+Tanalyze the current codebase and generate a well-structured `README.md` file. The README should include, at a minimum:
+- A brief overview of the project
+- How to set up and run the project
+- API endpoints and functionality
+- Instructions for running the test suite
+
+
 ``` 
 
 Generated Code Snippets:
 ```
-TODO: List all modified code files with the relevant line numbers.
+README.md
 ```
 
 
